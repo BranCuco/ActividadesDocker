@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  database:
+    container_name: databaseBran
+    image: postgres:alpine3.18
+    ports:
+      - 5432:5432
+    volumes:
+      - nice:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=12345
+
+  pgAdmin:
+    depends_on:
+      - database
+    container_name: contenedornice
+    image: dpage/pgadmin4:7.3
+    ports:
+      - 8083:80
+    volumes:
+      - ./pgAdmin:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=12345
+      - PGADMIN_DEFAULT_EMAIL=bran.escuela@gmail.com
+
+volumes: 
+  nice: 
+    external: true
